@@ -1,0 +1,20 @@
+description: >
+  This command scans a container for vulnerability and generates a report.
+# #What will this command do?
+# Descriptions should be short, simple, and clear.
+parameters:
+  imageName:
+    type: string
+    default: "node"
+    description: "Container to scan?"
+  cimgTag:
+    type: string
+    default: "current"
+    description: "Which tag to be used for cimg/base"
+steps:
+  - run:
+      environment:
+        PARAM_IMAGE: <<parameters.imageName>>
+        VSCAN_REQUEST: <<include(scripts/xray_request.json)>>
+      name: Engine Execution - Vulnarability Scan
+      command: <<include(scripts/vscan.sh)>>
