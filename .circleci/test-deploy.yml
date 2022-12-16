@@ -1,6 +1,6 @@
 version: 2.1
 orbs:
-  <orb-name>: slimdevops/slim-ai-test-orb@dev:<<pipeline.git.revision>>
+  slim-ai-test-orb: slimdevops/slim-ai-test-orb@dev:<<pipeline.git.revision>>
   orb-tools: circleci/orb-tools@11.5
 
 filters: &filters
@@ -25,13 +25,13 @@ jobs:
     steps:
       - checkout
       # Run your orb's commands to validate them.
-      - foc-orb-test/xray:
+      - slim-ai-test-orb/xray:
           imageName: << parameters.image-name >>
           cimgTag: << parameters.cimg-tag >>
       - store_artifacts:
           path: /tmp/artifact-xray
           destination: xray-json
-      - foc-orb-test/vscan:
+      - slim-ai-test-orb/vscan:
           imageName: << parameters.image-name >>
           cimgTag: << parameters.cimg-tag >>
       - store_artifacts:
