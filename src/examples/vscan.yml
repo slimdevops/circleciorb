@@ -6,7 +6,7 @@ description: >
 usage:
   version: 2.1
   orbs:
-    <orb-name>: <namespace>/<orb-name>@1.2.3
+    <orb-name>: slimdevops/slim-ai-test-orb@0.0.1
   jobs:
     build:
       parameters:
