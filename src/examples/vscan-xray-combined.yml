@@ -3,7 +3,7 @@ description: >
   The generated report will be uploaded to Circle CI Artifact.After this process the container will be added to the Favourite collection in Slim Portal.
 # Provide a use-case based example for using this orb.
 # Everything in the `usage` section will be displayed in the orb registry.
-# Comments are not retained.
+# Comments are not retained..
 usage:
   version: 2.1
   orbs:
