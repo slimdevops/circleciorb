@@ -57,7 +57,7 @@ vscanReport=$(curl -L -u ":${SAAS_KEY}" -X 'GET' \
 
 echo "${vscanReport}" >> /tmp/artifact-vscan;#Report will be added to Artifact
 
-Fetching image details
+#Fetching image details
 echo "Fetching Details for" : "${PARAM_IMAGE}"
 
 imageDetails=$(curl -u ":${SAAS_KEY}" -X "GET" \
