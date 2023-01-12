@@ -56,10 +56,7 @@ vscanReport=$(curl -L -u ":${SAAS_KEY}" -X 'GET' \
 
 echo "${vscanReport}" >> /tmp/artifact-vscan;#Report will be added to Artifact
 
-
-
 #Adding the container to Favourites
-
 curl -u ":${SAAS_KEY}" -X POST "${apiDomain}/orgs/${ORG_ID}/collections/${FAV_COLLECTION_ID}/images//pins" -H  "accept: application/json" -H  "Content-Type: application/json" -d "{\"scope\":\"tag\",\"connector\":\"${connectorId}\",\"entity\":\"${entity}\",\"namespace\":\"${nameSpace}\",\"version\":\"${tag}\",\"digest\":\"\",\"os\":\"linux\",\"arch\":\"amd64\"}"
 
 
