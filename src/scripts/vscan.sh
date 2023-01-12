@@ -58,10 +58,11 @@ vscanReport=$(curl -L -u ":${SAAS_KEY}" -X 'GET' \
 echo "${vscanReport}" >> /tmp/artifact-vscan;#Report will be added to Artifact
 
 #Fetching image details
+
 echo "Fetching Details for" : "${PARAM_IMAGE}"
 
 imageDetails=$(curl -u ":${SAAS_KEY}" -X "GET" \
-  "${API_DOMAIN}/orgs/${ORG_ID}/collection/images?limit=10&entity=${PARAM_IMAGE}&connector=${connectorId}&namespace=${nameSpace}" \
+  "${apiDomain}/orgs/${ORG_ID}/collection/images?limit=10&entity=${PARAM_IMAGE}&connector=${connectorId}&namespace=${nameSpace}" \
   -H "accept: application/json")
  
 
