@@ -4,6 +4,7 @@
 connectorId="${IMAGE_CONNECTOR}"
 nameSpace="${IMAGE_NAMESPACE}"
 tag="${IMAGE_TAG}"
+entity="${PARAM_IMAGE}"
 apiDomain="https://platform.slim.dev"
 
 
