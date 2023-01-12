@@ -50,9 +50,9 @@ xrayReport=$(curl -L -u ":${SAAS_KEY}" -X 'GET' \
 
 echo "${xrayReport}" >> /tmp/artifact-xray;#Uploading report to Artifact
 
-shaId=$(jq -r '.source_image.identity.digests[0]' <<< "${xrayReport}")
+# shaId=$(jq -r '.source_image.identity.digests[0]' <<< "${xrayReport}")
 
-echo "${shaId}"
+# echo "${shaId}"
 #Fetching image details
 
 echo "Fetching Details for" : "${PARAM_IMAGE}"
@@ -72,7 +72,7 @@ echo "${imageId}"
 
 
 #Adding the container to Favourites
-curl -u ":${SAAS_KEY}" -X POST "${apiDomain}/orgs/${ORG_ID}/collections/${FAV_COLLECTION_ID}/images/${imageId}/pins" -H  "accept: application/json" -H  "Content-Type: application/json" -d "{\"scope\":\"digest\",\"connector\":\"${connectorId}\",\"entity\":\"${entity}\",\"namespace\":\"${nameSpace}\",\"version\":\"${tag}\",\"digest\":\"${shaId}\",\"os\":\"linux\",\"arch\":\"amd64\"}"
+curl -u ":${SAAS_KEY}" -X POST "${apiDomain}/orgs/${ORG_ID}/collections/${FAV_COLLECTION_ID}/images/${imageId}/pins" -H  "accept: application/json" -H  "Content-Type: application/json" -d "{\"scope\":\"tag\",\"connector\":\"${connectorId}\",\"entity\":\"${entity}\",\"namespace\":\"${nameSpace}\",\"version\":\"${tag}\",\"digest\":\"\",\"os\":\"linux\",\"arch\":\"amd64\"}"
 
 
 
