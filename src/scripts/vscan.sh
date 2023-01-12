@@ -1,15 +1,5 @@
 #!/bin/bash
-#Fetching the Image details using the image nameeg:node
-# echo "Fetching Details for" : "${PARAM_IMAGE}"
 
-# imageDetails=$(curl -u ":${SAAS_KEY}" -X "GET" \
-#   "${API_DOMAIN}/orgs/${ORG_ID}/collection/images?limit=10&entity=${PARAM_IMAGE}" \
-#   -H "accept: application/json")
- 
-
-# imageDetail=$(jq -r '.data[0]' <<< "${imageDetails}")
-# connectorId=$(jq -r '.connector' <<< "${imageDetail}")
-# nameSpace=$(jq -r '.namespace' <<< "${imageDetail}")
 
 
 connectorId="${IMAGE_CONNECTOR}"
@@ -65,6 +55,12 @@ vscanReport=$(curl -L -u ":${SAAS_KEY}" -X 'GET' \
   -H 'Content-Type: application/json')
 
 echo "${vscanReport}" >> /tmp/artifact-vscan;#Report will be added to Artifact
+
+
+
+#Adding the container to Favourites
+
+curl -u ":${SAAS_KEY}" -X POST "${apiDomain}/orgs/${ORG_ID}/collections/${FAV_COLLECTION_ID}/images//pins" -H  "accept: application/json" -H  "Content-Type: application/json" -d "{\"scope\":\"tag\",\"connector\":\"${connectorId}\",\"entity\":\"${entity}\",\"namespace\":\"${nameSpace}\",\"version\":\"${tag}\",\"digest\":\"\",\"os\":\"linux\",\"arch\":\"amd64\"}"
 
 
 

@@ -1,20 +1,5 @@
 #!/bin/bash
-#Fetching image details
-# echo "Fetching Details for" : "${PARAM_IMAGE}"
 
-# imageDetails=$(curl -u ":${SAAS_KEY}" -X "GET" \
-#   "${API_DOMAIN}/orgs/${ORG_ID}/collection/images?limit=10&entity=${PARAM_IMAGE}" \
-#   -H "accept: application/json")
- 
-
-# imageDetail=$(jq -r '.data[0]' <<< "${imageDetails}")
-
-# connectorId=$(jq -r '.connector' <<< "${imageDetail}")
-# nameSpace=$(jq -r '.namespace' <<< "${imageDetail}")
-# imageId=$(jq -r '.id' <<< "${imageDetail}")
-# entity=$(jq -r '.entity' <<< "${imageDetail}")
-
-# echo "${imageId}"
 
 connectorId="${IMAGE_CONNECTOR}"
 nameSpace="${IMAGE_NAMESPACE}"
@@ -66,21 +51,5 @@ xrayReport=$(curl -L -u ":${SAAS_KEY}" -X 'GET' \
 echo "${xrayReport}" >> /tmp/artifact-xray;#Uploading report to Artifact
 
 
-
-#shaId=$(jq -r '.source_image.identity.digests[0]' <<< "${xrayReport}")
-#tag=$(jq -r '.source_image.identity.tags[0]' <<< "${xrayReport}")
-
-
-
-
-# echo "${shaId}"
-echo "${tag}"
-
-
-
-
-#Adding the container to Favourites
-
-curl -u ":${SAAS_KEY}" -X POST "${apiDomain}/orgs/${ORG_ID}/collections/${FAV_COLLECTION_ID}/images//pins" -H  "accept: application/json" -H  "Content-Type: application/json" -d "{\"scope\":\"tag\",\"connector\":\"${connectorId}\",\"entity\":\"${entity}\",\"namespace\":\"${nameSpace}\",\"version\":\"${tag}\",\"digest\":\"\",\"os\":\"linux\",\"arch\":\"amd64\"}"
 
 
