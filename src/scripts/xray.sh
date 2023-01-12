@@ -74,7 +74,7 @@ echo "${xrayReport}" >> /tmp/artifact-xray;#Uploading report to Artifact
 
 
 # echo "${shaId}"
-# echo "${tag}"
+echo "${tag}"
 
 
 
