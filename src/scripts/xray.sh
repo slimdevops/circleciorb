@@ -52,7 +52,7 @@ echo "${xrayReport}" >> /tmp/artifact-xray;#Uploading report to Artifact
 
 shaId=$(jq -r '.source_image.identity.digests[0]' <<< "${xrayReport}")
 
-echo shaId
+echo "${shaId}"
 #Fetching image details
 
 echo "Fetching Details for" : "${PARAM_IMAGE}"
