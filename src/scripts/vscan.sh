@@ -2,7 +2,7 @@
 
 
 
-if echo ${PARAM_IMAGE} | grep -q "[\/:]"; then
+if echo "${PARAM_IMAGE}" | grep -q "[\/:]"; then
     echo "The string is valid"
 else
     echo "Invalid Image,Image name must be in library/node:latest format"
@@ -15,7 +15,7 @@ IFS='/:'
 string="${PARAM_IMAGE}"
 
 # Use the read command to split the string and assign the resulting words to an array
-read -a words <<< "$string"
+read -ra words <<< "$string"
 
 connectorId="${IMAGE_CONNECTOR}"
 nameSpace="${words[0]}"
