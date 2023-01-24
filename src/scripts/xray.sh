@@ -1,10 +1,24 @@
 #!/bin/bash
 
+if echo ${PARAM_IMAGE} | grep -q "[\/:]"; then
+    echo "The string is valid"
+else
+    echo "Invalid Image,Image name must be in library/node:latest format"
+    exit 1;
+fi
+# Set the IFS variable to "/:", which will be used to split the string
+IFS='/:'
+
+# Assign the string to a variable
+string="${PARAM_IMAGE}"
+
+# Use the read command to split the string and assign the resulting words to an array
+read -a words <<< "$string"
 
 connectorId="${IMAGE_CONNECTOR}"
-nameSpace="${IMAGE_NAMESPACE}"
-tag="${IMAGE_TAG}"
-entity="${PARAM_IMAGE}"
+nameSpace="${words[0]}"
+tag="${words[2]}"
+entity="${words[1]}"
 apiDomain="https://platform.slim.dev"
 
 
@@ -14,7 +28,7 @@ jsonData="${XRAY_REQUEST}"
 command=xray
 jsonDataUpdated=${jsonData//__CONNECTOR_ID__/${connectorId}}
 jsonDataUpdated=${jsonDataUpdated//__NAMESPACE__/${nameSpace}}
-jsonDataUpdated=${jsonDataUpdated//__REPO__/"${PARAM_IMAGE}"}
+jsonDataUpdated=${jsonDataUpdated//__REPO__/"${entity}"}
 jsonDataUpdated=${jsonDataUpdated//__COMMAND__/${command}}
 jsonDataUpdated=${jsonDataUpdated//__TAG__/${tag}}
 #Starting Xray Scan
