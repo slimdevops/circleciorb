@@ -7,12 +7,6 @@ parameters:
   imageName:
     type: string
     description: "Container to scan.eg: node"
-  imageNamespace:
-    type: string
-    description: "Namespace of image.eg: library"
-  imageTag:
-    type: string
-    description: "Version of image.eg: latest"
   imageConnector:
     type: string
     description: "Connector.eg: dockerhub.public"
@@ -24,8 +18,6 @@ steps:
   - run:
       environment:
         PARAM_IMAGE: <<parameters.imageName>>
-        IMAGE_NAMESPACE: <<parameters.imageNamespace>>
-        IMAGE_TAG: <<parameters.imageTag>>
         IMAGE_CONNECTOR: <<parameters.imageConnector>>
         XRAY_REQUEST: <<include(scripts/xray_request.json)>>
       name: Engine Execution - X-Ray

@@ -9,12 +9,6 @@ parameters:
   imageName:
     type: string
     description: "Container to scan.eg: node"
-  imageNamespace:
-    type: string
-    description: "Namespace of image.eg: library"
-  imageTag:
-    type: string
-    description: "Version of image.eg: latest"
   imageConnector:
     type: string
     description: "Connector.eg: dockerhub.public"
@@ -25,6 +19,4 @@ parameters:
 steps:
   - vscan:
       imageName: << parameters.imageName >>
-      imageNamespace: << parameters.imageNamespace >>
-      imageTag: << parameters.imageTag >>
       imageConnector: << parameters.imageConnector >>

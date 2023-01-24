@@ -7,14 +7,6 @@ parameters:
     description: Image to be scanned.
     type: string
     default: library/node:latest #Name of the image to be scanned eg:node
-  image-namespace:
-    description: Namespace of the image.
-    type: string
-    default: library #Namespace of the image to be scanned eg:node
-  image-tag:
-    description: Version of the image.
-    type: string
-    default: latest #Version of the image to be scanned eg:latest
   image-connector:
     description: Connector.
     type: string
@@ -38,8 +30,6 @@ jobs:
       # Run your orb's commands to validate them.
       - slim-ai-test-orb/xray:
           imageName: << pipeline.parameters.image-name >>
-          imageNamespace: << pipeline.parameters.image-namespace >>
-          imageTag: << pipeline.parameters.image-tag >>
           imageConnector: << pipeline.parameters.image-connector >>
           cimgTag: << pipeline.parameters.cimg-tag >>
       - store_artifacts:
@@ -47,8 +37,6 @@ jobs:
           destination: xray-json
       - slim-ai-test-orb/vscan:
           imageName: << pipeline.parameters.image-name >>
-          imageNamespace: << pipeline.parameters.image-namespace >>
-          imageTag: << pipeline.parameters.image-tag >>
           imageConnector: << pipeline.parameters.image-connector >>
           cimgTag: << pipeline.parameters.cimg-tag >>
       - store_artifacts:
