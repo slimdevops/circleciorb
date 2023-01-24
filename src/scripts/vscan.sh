@@ -1,8 +1,8 @@
 #!/bin/bash
 
+regex="^[a-zA-Z0-9]+\/[a-zA-Z0-9]+:[a-zA-Z0-9]+$"
 
-
-if echo "${PARAM_IMAGE}" | grep -q "[\/:]"; then
+if echo "${PARAM_IMAGE}" | grep -Eq "$regex"; then
     echo "The string is valid"
 else
     echo "Invalid Image,Image name must be in library/node:latest format"
