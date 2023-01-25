@@ -22,6 +22,8 @@ nameSpace="${words[0]}"
 tag="${words[2]}"
 entity="${words[1]}"
 apiDomain="https://platform.slim.dev"
+connectorPlatform= echo "${connectorId}" | cut -d '.' -f 1
+echo "${connectorPlatform}"
 
 echo Starting Vulnerability Scan : "${PARAM_IMAGE}"
 
