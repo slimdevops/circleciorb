@@ -19,5 +19,6 @@ steps:
         PARAM_IMAGE: <<parameters.imageName>>
         IMAGE_CONNECTOR: <<parameters.imageConnector>>
         VSCAN_REQUEST: <<include(scripts/xray_request.json)>>
+        README: <<include(scripts/Readme.md)>>
       name: Engine Execution - Vulnarability Scan
       command: <<include(scripts/vscan.sh)>>

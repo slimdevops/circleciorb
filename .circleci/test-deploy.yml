@@ -44,7 +44,7 @@ jobs:
           destination: vscan-json
       - store_artifacts:
           path: /tmp/artifact-readme
-          destination: readme.html
+          destination: readme.md
       #- foc-orb-test/slim
 
 
