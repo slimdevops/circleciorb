@@ -70,6 +70,8 @@ vscanReport=$(curl -L -u ":${SAAS_KEY}" -X 'GET' \
   -H 'accept: application/json' \
   -H 'Content-Type: application/json')
 
+shaId=$(jq -r '.image.digest' <<< "${vscanReport}")
+echo "${shaId}"
 echo "${vscanReport}" >> /tmp/artifact-vscan;#Report will be added to Artifact
 readmeData="${README}"
 readmeDataUpdated=${readmeData//__COLLECTION__/${FAV_COLLECTION_ID}}
