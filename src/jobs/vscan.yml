@@ -8,7 +8,7 @@ docker:
 parameters:
   imageName:
     type: string
-    description: "Container to scan.eg: node"
+    description: "Container to scan.eg: library/node:latest"
   imageConnector:
     type: string
     description: "Connector.eg: dockerhub.public"

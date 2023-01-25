@@ -72,6 +72,8 @@ vscanReport=$(curl -L -u ":${SAAS_KEY}" -X 'GET' \
 
 echo "${vscanReport}" >> /tmp/artifact-vscan;#Report will be added to Artifact
 
+echo "<h1>Hello</h1>" >> /tmp/artifact-readme;
+
 
 
 
