@@ -11,10 +11,12 @@
   </a>
 </div>
 <br />
+<div  style="margin-left:10px;">
 <h2>Success!</h2>
-<p> 
+<p style="margin-left:10px;"> 
 Your image was successfully scanned and profiled using the Slim platform.<br />Visit <a class="font-class" href="https://portal.slim.dev/"  target="_blank">portal.slim.dev</a> to learn more.</p>
 
 👉 <a class="font-class" href="https://portal.slim.dev/collections/__COLLECTION__" target="_blank"><b>Collection</b></a><br />
 👉 <a class="font-class" href="" target="_blank"><b>Profile</b></a><br />
 👉 <a class="font-class" href="" target="_blank"><b>Vulnerability Scan</b></a>
+</div>
