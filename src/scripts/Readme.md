@@ -9,6 +9,6 @@
 <p> 
 Your image was successfully scanned and profiled using the Slim platform.<br />Visit <a href="https://portal.slim.dev/"  target="_blank">portal.slim.dev</a> to learn more.</p>
 
-👉 <a href="https://portal.slim.dev/collections/__COLLECTION__" target="_blank">Collection</a><br />
-👉 <a href="https://portal.slim.dev/collections/__COLLECTION__" target="_blank">Profile</a><br />
-👉 <a href="https://portal.slim.dev/collections/__COLLECTION__" target="_blank">Vulnerability Scan</a>
+👉 <a href="https://portal.slim.dev/collections/__COLLECTION__" target="_blank"><b>Collection</b></a><br />
+👉 <a href="" target="_blank"><b>Profile</b></a><br />
+👉 <a href="" target="_blank"><b>Vulnerability Scan</b></a>
