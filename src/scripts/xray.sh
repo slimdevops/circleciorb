@@ -27,6 +27,9 @@ repository=${parts[2]}
 #   tag="latest"
 # fi
 
+echo "${registry}"
+echo "${namespace}"
+echo "${repository}"
 
 if echo "$repository" | grep -q ":"; then
   IFS=':' read -ra arr <<< "$repository"
