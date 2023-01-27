@@ -62,6 +62,9 @@ nameSpace="${namespace}"
 entity="${repository}"
 apiDomain="https://platform.slim.dev"
 
+echo "${tag}"
+echo "${nameSpace}"
+echo "${entity}"
 
 echo Starting X-Ray Scan : "${PARAM_IMAGE}"
 
