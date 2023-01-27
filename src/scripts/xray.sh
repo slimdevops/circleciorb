@@ -34,7 +34,7 @@ if [ -z "$repository" ]; then
   repository="${namespace}"
   namespace="library"
 fi
-
+echo "${repository}"
 if echo "$repository" | grep -q ":"; then
   IFS=':' read -ra arr <<< "$repository"
   tag=${arr[1]}
