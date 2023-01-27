@@ -37,26 +37,22 @@ else
   tag="latest"
 fi
 echo "${tag}"
-colon_found=$(echo "$registry" | grep -oP ':[.]')
 
-if [ -z "$namespace" ] && [ -n "$registry" ] && [ -z "$colon_found" ]; then
+
+if echo "$registry" | grep -q ":"; then
   namespace=$registry
   registry=""
 fi
 
-if [ -z "$registry" ]; then
-  registry=""
-else
-  registry="$registry/"
-fi
+
 
 if [ -z "$namespace" ]; then
-  namespace="library/"
+  namespace="library"
 else
   if [ "$namespace" != "library" ]; then
-    namespace="$namespace/"
+    namespace="$namespace"
   else
-    namespace="library/"
+    namespace="library"
   fi
 fi
 
