@@ -93,9 +93,9 @@ IFS='.' read -ra arr <<< "$connectorData"
 secondPart=${arr[1]}
 firstPart=${arr[0]}
 if [ "${secondPart}" = "public" ];then
-  urlProfile="https://portal.slim.dev/home/xray/${firstPart}%3A%2F%2F${connectorData}%2F${nameSpace}%2F${entity}%3A${tag}%40${shaId}#explorer"
+  urlProfile="https://portal.slim.dev/home/xray/${firstPart}%3A%2F%2F${connectorData}%2F${nameSpace}%2F${entity}%3A${tag}%40sha256%3A${shaId}#explorer"
 else
-  urlProfile="https://portal.slim.dev/home/xray/${connectorData}%3A%2F%2F${connectorId}%2F${nameSpace}%2F${entity}%3A${tag}%40${shaId}#explorer"
+  urlProfile="https://portal.slim.dev/home/xray/${connectorData}%3A%2F%2F${connectorId}%2F${nameSpace}%2F${entity}%3A${tag}%40sha256%3A${shaId}#explorer"
 fi
 echo "${shaId}"
 echo "${vscanReport}" >> /tmp/artifact-vscan;#Report will be added to Artifact
