@@ -44,16 +44,8 @@ if echo "$registry" | grep -q ":"; then
   registry=""
 fi
 
-
-
 if [ -z "$namespace" ]; then
   namespace="library"
-else
-  if [ "$namespace" != "library" ]; then
-    namespace="$namespace"
-  else
-    namespace="library"
-  fi
 fi
 
 
