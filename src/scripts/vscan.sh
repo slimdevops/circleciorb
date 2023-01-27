@@ -92,7 +92,7 @@ connectorData=$(jq -r '.image.connector' <<< "${vscanReport}")
 IFS='.' read -ra arr <<< "$connectorData"
 secondPart=${arr[1]}
 firstPart=${arr[0]}
-if "${secondPart}" == "public";then
+if [ "${secondPart}" = "public" ];then
   urlProfile="https://portal.slim.dev/home/xray/${firstPart}%3A%2F%2F${connectorData}%2F${nameSpace}%2F${entity}%3A${tag}%40${shaId}#explorer"
 else
   urlProfile="https://portal.slim.dev/home/xray/${connectorData}%3A%2F%2F${connectorId}%2F${nameSpace}%2F${entity}%3A${tag}%40${shaId}#explorer"
@@ -101,6 +101,7 @@ echo "${shaId}"
 echo "${vscanReport}" >> /tmp/artifact-vscan;#Report will be added to Artifact
 readmeData="${README}"
 readmeDataUpdated=${readmeData//__COLLECTION__/${FAV_COLLECTION_ID}}
+readmeDataUpdated=${readmeData//__PROFILE__/${urlProfile}}
 echo "${readmeDataUpdated}" >> /tmp/artifact-readme;
 
 
