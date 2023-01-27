@@ -27,14 +27,11 @@ repository=${parts[2]}
 #   tag="latest"
 # fi
 
-echo "${registry}"
-echo "${namespace}"
-echo "${repository}"
 if [ -z "$repository" ]; then
   repository="${namespace}"
   namespace="library"
 fi
-echo "${repository}"
+
 if echo "$repository" | grep -q ":"; then
   IFS=':' read -ra arr <<< "$repository"
   tag=${arr[1]}
@@ -43,12 +40,9 @@ else
   repository=${arr[0]}
   tag="latest"
 fi
-echo "${tag}"
 
-if echo "$registry" | grep -q ":"; then
-  namespace=$registry
-  registry=""
-fi
+
+
 
 if [ -z "$namespace" ]; then
   namespace="library"
