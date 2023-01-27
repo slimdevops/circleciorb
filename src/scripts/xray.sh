@@ -21,7 +21,7 @@ registry=${parts[0]}
 namespace=${parts[1]}
 repository=${parts[2]}
 tag=${parts[3]}
-
+echo "${tag}"
 if [ -z "$tag" ]; then
   tag="latest"
 fi
