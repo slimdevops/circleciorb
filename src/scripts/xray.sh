@@ -13,10 +13,10 @@
 # Assign the string to a variable
 string="${IMAGE_CONNECTOR}/${PARAM_IMAGE}"
 echo "${string}"
-match=$(echo "$string" | grep -oP '^(?:([^/]+)/)?(?:([^/]+)/)?([^@:/]+)(?:[@:](.+))?$')
+match=$(echo "${string}" | grep -oP '^(?:([^/]+)/)?(?:([^/]+)/)?([^@:/]+)(?:[@:](.+))?$')
 
-IFS='/' read -r -a parts <<< "$match"
-
+IFS='/' 
+read -r -a parts <<< "$match"
 registry=${parts[0]}
 namespace=${parts[1]}
 repository=${parts[2]}
