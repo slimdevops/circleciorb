@@ -1,17 +1,6 @@
 #!/bin/bash
 
-#regex="^[a-zA-Z0-9]+\/[a-zA-Z0-9]+:[a-zA-Z0-9]+$"
 
-# if echo "${PARAM_IMAGE}" | grep -Eq "$regex"; then
-#     echo "The string is valid"
-# else
-#     echo "Invalid Image,Image name must be in library/node:latest format"
-#     exit 1;
-# fi
-# Set the IFS variable to "/:", which will be used to split the string
-IFS='/:'
-
-# Assign the string to a variable
 string="${IMAGE_CONNECTOR}/${PARAM_IMAGE}"
 
 match=$(echo "${string}" | grep -oP '^(?:([^/]+)/)?(?:([^/]+)/)?([^@:/]+)(?:[@:](.+))?$')
@@ -39,12 +28,10 @@ if [ -z "$namespace" ]; then
   namespace="library"
 fi
 
-# Use the read command to split the string and assign the resulting words to an array
-#read -ra words <<< "$string"
+
 
 connectorId="${IMAGE_CONNECTOR}"
 nameSpace="${namespace}"
-#tag="${tag}"
 entity="${repository}"
 apiDomain="https://platform.slim.dev"
 

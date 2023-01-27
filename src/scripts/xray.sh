@@ -1,16 +1,5 @@
 #!/bin/bash
-#regex="^[a-zA-Z0-9]+\/[a-zA-Z0-9]+:[a-zA-Z0-9]+$"
 
-# if echo "${PARAM_IMAGE}" | grep -Eq "$regex"; then
-#     echo "The string is valid"
-# else
-#     echo "Invalid Image,Image name must be in library/node:latest format"
-#     exit 1;
-# fi
-# Set the IFS variable to "/:", which will be used to split the string
-#IFS='/:'
-
-# Assign the string to a variable
 string="${IMAGE_CONNECTOR}/${PARAM_IMAGE}"
 
 match=$(echo "${string}" | grep -oP '^(?:([^/]+)/)?(?:([^/]+)/)?([^@:/]+)(?:[@:](.+))?$')
@@ -21,11 +10,6 @@ read -r -a parts <<< "$match"
 
 namespace=${parts[1]}
 repository=${parts[2]}
-#tag=${parts[3]}
-# echo "${tag}"
-# if [ -z "$tag" ]; then
-#   tag="latest"
-# fi
 
 if [ -z "$repository" ]; then
   repository="${namespace}"
@@ -48,18 +32,13 @@ if [ -z "$namespace" ]; then
 fi
 
 
-# Use the read command to split the string and assign the resulting words to an array
-#read -ra words <<< "$string"
 
 connectorId="${IMAGE_CONNECTOR}"
 nameSpace="${namespace}"
-#tag="${tag}"
 entity="${repository}"
 apiDomain="https://platform.slim.dev"
 
-echo "${tag}"
-echo "${nameSpace}"
-echo "${entity}"
+
 
 echo Starting X-Ray Scan : "${PARAM_IMAGE}"
 
