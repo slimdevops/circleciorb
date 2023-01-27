@@ -10,7 +10,7 @@ parameters:
   image-connector:
     description: Connector.
     type: string
-    default: rkcn.2HOmLiEEGYI5AgndIQp4aqovunS #Connector used by slim to get the image eg:dockerhub.public
+    default: docker.authenticated/rkcn.2HOmLiEEGYI5AgndIQp4aqovunS #Connector used by slim to get the image eg:dockerhub.public
   cimg-tag:
     description: Which tag to be used for cimg/base.
     type: string
