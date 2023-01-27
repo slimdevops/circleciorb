@@ -22,7 +22,13 @@ echo "${parts[2]}"
 registry=${parts[0]}
 namespace=${parts[1]}
 repository=${parts[2]}
-
+echo "${registry}"
+echo "${namespace}"
+echo "${repository}"
+if [ -z "$repository" ]; then
+  repository="${namespace}"
+  namespace="library"
+fi
 if echo "$repository" | grep -q ":"; then
   IFS=':' read -ra arr <<< "$repository"
   tag=${arr[1]}
