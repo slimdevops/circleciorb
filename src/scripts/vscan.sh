@@ -12,49 +12,40 @@
 IFS='/:'
 
 # Assign the string to a variable
-string="${IMAGE_CONNECTOR}/${PARAM_IMAGE}"
-
-# Use the read command to split the string and assign the resulting words to an array
-#read -ra words <<< "$string"
-
-match=$(echo "$string" | grep -oP '^(?:([^/]+)/)?(?:([^/]+)/)?([^@:/]+)(?:[@:](.+))?$')
-
-IFS='/' read -r -a parts <<< "$match"
-
+string="${PARAM_IMAGE}"
+echo "${string}"
+match=$(echo "${string}" | grep -oP '^(?:([^/]+)/)?(?:([^/]+)/)?([^@:/]+)(?:[@:](.+))?$')
+echo "${match}"
+IFS='/' 
+read -r -a parts <<< "$match"
+echo "${parts[2]}"
 registry=${parts[0]}
 namespace=${parts[1]}
 repository=${parts[2]}
-tag=${parts[3]}
+#tag=${parts[3]}
+# echo "${tag}"
+# if [ -z "$tag" ]; then
+#   tag="latest"
+# fi
 
-if [ -z "$tag" ]; then
+
+if echo "$repository" | grep -q ":"; then
+  IFS=':' read -ra arr <<< "$repository"
+  tag=${arr[1]}
+  repository=${arr[0]}
+else
+  repository=${arr[0]}
   tag="latest"
 fi
+echo "${tag}"
 
-colon_found=$(echo "$registry" | grep -oP ':[.]')
-
-if [ -z "$namespace" ] && [ -n "$registry" ] && [ -z "$colon_found" ]; then
+if echo "$registry" | grep -q ":"; then
   namespace=$registry
   registry=""
 fi
 
-if [ -z "$registry" ]; then
-  registry=""
-else
-  registry="$registry/"
-fi
-
 if [ -z "$namespace" ]; then
-  namespace="library/"
-else
-  if [ "$namespace" != "library" ]; then
-    namespace="$namespace/"
-  else
-    namespace="library/"
-  fi
-fi
-
-if [ "$tag" == "latest" ]; then
-  tag=":latest"
+  namespace="library"
 fi
 
 # Use the read command to split the string and assign the resulting words to an array

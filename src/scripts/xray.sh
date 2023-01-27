@@ -11,7 +11,7 @@
 #IFS='/:'
 
 # Assign the string to a variable
-string="${IMAGE_CONNECTOR}/${PARAM_IMAGE}"
+string="${PARAM_IMAGE}"
 echo "${string}"
 match=$(echo "${string}" | grep -oP '^(?:([^/]+)/)?(?:([^/]+)/)?([^@:/]+)(?:[@:](.+))?$')
 echo "${match}"
@@ -37,7 +37,6 @@ else
   tag="latest"
 fi
 echo "${tag}"
-
 
 if echo "$registry" | grep -q ":"; then
   namespace=$registry
