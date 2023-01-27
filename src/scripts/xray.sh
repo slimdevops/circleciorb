@@ -29,6 +29,7 @@ repository=${parts[2]}
 
 
 colon_found=$(echo "$repository" | grep -oP ':[.]')
+echo "${colon_found}"
 if [ -z "$colon_found" ]; then
   IFS=':' read -ra arr <<< "$repository"
   tag=${arr[1]}
