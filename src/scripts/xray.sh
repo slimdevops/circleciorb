@@ -13,7 +13,7 @@
 # Assign the string to a variable
 string="${PARAM_IMAGE}"
 
-match=$(echo $string | grep -oP '^(?:([^/]+)/)?(?:([^/]+)/)?([^@:/]+)(?:[@:](.+))?$')
+match=$(echo "$string" | grep -oP '^(?:([^/]+)/)?(?:([^/]+)/)?([^@:/]+)(?:[@:](.+))?$')
 
 IFS='/' read -r -a parts <<< "$match"
 
@@ -26,7 +26,7 @@ if [ -z "$tag" ]; then
   tag="latest"
 fi
 
-colon_found=$(echo $registry | grep -oP ':[.]')
+colon_found=$(echo "$registry" | grep -oP ':[.]')
 
 if [ -z "$namespace" ] && [ -n "$registry" ] && [ -z "$colon_found" ]; then
   namespace=$registry
