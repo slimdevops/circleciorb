@@ -100,7 +100,9 @@ fi
 echo "${shaId}"
 echo "${vscanReport}" >> /tmp/artifact-vscan;#Report will be added to Artifact
 readmeData="${README}"
-readmeDataUpdated=${readmeData//__COLLECTION__/${FAV_COLLECTION_ID}}
+echo "${FAV_COLLECTION_ID}"
+collectionUrl="https://portal.slim.dev/collections/${FAV_COLLECTION_ID}"
+readmeDataUpdated=${readmeData//__COLLECTION__/${collectionUrl}}
 readmeDataUpdated=${readmeData//__PROFILE__/${urlProfile}}
 echo "${readmeDataUpdated}" >> /tmp/artifact-readme;
 
