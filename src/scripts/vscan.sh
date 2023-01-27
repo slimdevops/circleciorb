@@ -18,13 +18,11 @@ match=$(echo "${string}" | grep -oP '^(?:([^/]+)/)?(?:([^/]+)/)?([^@:/]+)(?:[@:]
 
 IFS='/' 
 read -r -a parts <<< "$match"
-echo "${parts[2]}"
-registry=${parts[0]}
+
+
 namespace=${parts[1]}
 repository=${parts[2]}
-echo "${registry}"
-echo "${namespace}"
-echo "${repository}"
+
 if [ -z "$repository" ]; then
   repository="${namespace}"
   namespace="library"
@@ -34,14 +32,7 @@ if echo "$repository" | grep -q ":"; then
   tag=${arr[1]}
   repository=${arr[0]}
 else
-  repository=${arr[0]}
   tag="latest"
-fi
-
-
-if echo "$registry" | grep -q ":"; then
-  namespace=$registry
-  registry=""
 fi
 
 if [ -z "$namespace" ]; then
