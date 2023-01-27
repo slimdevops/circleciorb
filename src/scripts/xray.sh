@@ -21,9 +21,20 @@ echo "${parts[2]}"
 registry=${parts[0]}
 namespace=${parts[1]}
 repository=${parts[2]}
-tag=${parts[3]}
-echo "${tag}"
-if [ -z "$tag" ]; then
+#tag=${parts[3]}
+# echo "${tag}"
+# if [ -z "$tag" ]; then
+#   tag="latest"
+# fi
+
+
+colon_found=$(echo "$repository" | grep -oP ':[.]')
+if [ -z "$colon_found" ]; then
+  IFS=':' read -ra arr <<< "$repository"
+  tag=${arr[1]}
+  repository=${arr[0]}
+else
+  repository=${arr[0]}
   tag="latest"
 fi
 
@@ -50,9 +61,6 @@ else
   fi
 fi
 
-if [ "$tag" == "latest" ]; then
-  tag=":latest"
-fi
 
 # Use the read command to split the string and assign the resulting words to an array
 #read -ra words <<< "$string"
