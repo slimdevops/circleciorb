@@ -13,21 +13,15 @@ IFS='/:'
 
 # Assign the string to a variable
 string="${IMAGE_CONNECTOR}/${PARAM_IMAGE}"
-echo "${string}"
+
 match=$(echo "${string}" | grep -oP '^(?:([^/]+)/)?(?:([^/]+)/)?([^@:/]+)(?:[@:](.+))?$')
-echo "${match}"
+
 IFS='/' 
 read -r -a parts <<< "$match"
 echo "${parts[2]}"
 registry=${parts[0]}
 namespace=${parts[1]}
 repository=${parts[2]}
-#tag=${parts[3]}
-# echo "${tag}"
-# if [ -z "$tag" ]; then
-#   tag="latest"
-# fi
-
 
 if echo "$repository" | grep -q ":"; then
   IFS=':' read -ra arr <<< "$repository"
@@ -37,7 +31,7 @@ else
   repository=${arr[0]}
   tag="latest"
 fi
-echo "${tag}"
+
 
 if echo "$registry" | grep -q ":"; then
   namespace=$registry
