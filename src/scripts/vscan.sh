@@ -1,6 +1,6 @@
 #!/bin/bash
 
-regex="^[a-zA-Z0-9]+\/[a-zA-Z0-9]+:[a-zA-Z0-9]+$"
+#regex="^[a-zA-Z0-9]+\/[a-zA-Z0-9]+:[a-zA-Z0-9]+$"
 
 # if echo "${PARAM_IMAGE}" | grep -Eq "$regex"; then
 #     echo "The string is valid"
