@@ -11,13 +11,13 @@
 #IFS='/:'
 
 # Assign the string to a variable
-string="${PARAM_IMAGE}"
-echo "${string}"
+string="${IMAGE_CONNECTOR}/${PARAM_IMAGE}"
+
 match=$(echo "${string}" | grep -oP '^(?:([^/]+)/)?(?:([^/]+)/)?([^@:/]+)(?:[@:](.+))?$')
-echo "${match}"
+
 IFS='/' 
 read -r -a parts <<< "$match"
-echo "${parts[2]}"
+
 registry=${parts[0]}
 namespace=${parts[1]}
 repository=${parts[2]}
