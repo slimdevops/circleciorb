@@ -15,12 +15,57 @@ IFS='/:'
 string="${PARAM_IMAGE}"
 
 # Use the read command to split the string and assign the resulting words to an array
-read -ra words <<< "$string"
+#read -ra words <<< "$string"
+
+match=$(echo $string | grep -oP '^(?:([^/]+)/)?(?:([^/]+)/)?([^@:/]+)(?:[@:](.+))?$')
+
+IFS='/' read -r -a parts <<< "$match"
+
+registry=${parts[0]}
+namespace=${parts[1]}
+repository=${parts[2]}
+tag=${parts[3]}
+
+if [ -z "$tag" ]; then
+  tag="latest"
+fi
+
+colon_found=$(echo $registry | grep -oP ':[.]')
+
+if [ -z "$namespace" ] && [ -n "$registry" ] && [ -z "$colon_found" ]; then
+  namespace=$registry
+  registry=""
+fi
+
+if [ -z "$registry" ]; then
+  registry=""
+else
+  registry="$registry/"
+fi
+
+if [ -z "$namespace" ]; then
+  namespace="library/"
+else
+  if [ "$namespace" != "library" ]; then
+    namespace="$namespace/"
+  else
+    namespace="library/"
+  fi
+fi
+
+if [ "$tag" == "latest" ]; then
+  tag=":latest"
+else
+  tag=":$tag"
+fi
+
+# Use the read command to split the string and assign the resulting words to an array
+#read -ra words <<< "$string"
 
 connectorId="${IMAGE_CONNECTOR}"
-nameSpace="${words[0]}"
-tag="${words[2]}"
-entity="${words[1]}"
+nameSpace="${namespace}"
+tag="${tag}"
+entity="${repository}"
 apiDomain="https://platform.slim.dev"
 
 IFS='.'
