@@ -28,9 +28,7 @@ repository=${parts[2]}
 # fi
 
 
-colon_found=$(echo "$repository" | grep -oP ':[.]')
-echo "${colon_found}"
-if [ -z "$colon_found" ]; then
+if echo "$repository" | grep -q ":"; then
   IFS=':' read -ra arr <<< "$repository"
   tag=${arr[1]}
   repository=${arr[0]}
@@ -38,7 +36,7 @@ else
   repository=${arr[0]}
   tag="latest"
 fi
-
+echo "${tag}"
 colon_found=$(echo "$registry" | grep -oP ':[.]')
 
 if [ -z "$namespace" ] && [ -n "$registry" ] && [ -z "$colon_found" ]; then
