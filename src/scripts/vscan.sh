@@ -55,7 +55,7 @@ fi
 
 if [ "$tag" == "latest" ]; then
   tag=":latest"
-
+fi
 
 # Use the read command to split the string and assign the resulting words to an array
 #read -ra words <<< "$string"
