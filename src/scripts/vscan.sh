@@ -12,7 +12,7 @@
 IFS='/:'
 
 # Assign the string to a variable
-string="${PARAM_IMAGE}"
+string="${IMAGE_CONNECTOR}/${PARAM_IMAGE}"
 
 # Use the read command to split the string and assign the resulting words to an array
 #read -ra words <<< "$string"

@@ -11,7 +11,7 @@
 #IFS='/:'
 
 # Assign the string to a variable
-string="${PARAM_IMAGE}"
+string="${IMAGE_CONNECTOR}/${PARAM_IMAGE}"
 
 match=$(echo "$string" | grep -oP '^(?:([^/]+)/)?(?:([^/]+)/)?([^@:/]+)(?:[@:](.+))?$')
 
