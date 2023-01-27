@@ -17,7 +17,7 @@ match=$(echo "${string}" | grep -oP '^(?:([^/]+)/)?(?:([^/]+)/)?([^@:/]+)(?:[@:]
 echo "${match}"
 IFS='/' 
 read -r -a parts <<< "$match"
-echo "${parts[1]}"
+echo "${parts[2]}"
 registry=${parts[0]}
 namespace=${parts[1]}
 repository=${parts[2]}
