@@ -14,7 +14,7 @@
 string="${IMAGE_CONNECTOR}/${PARAM_IMAGE}"
 echo "${string}"
 match=$(echo "${string}" | grep -oP '^(?:([^/]+)/)?(?:([^/]+)/)?([^@:/]+)(?:[@:](.+))?$')
-
+echo "${match}"
 IFS='/' 
 read -r -a parts <<< "$match"
 registry=${parts[0]}
