@@ -58,7 +58,7 @@ fi
 
 connectorId="${IMAGE_CONNECTOR}"
 nameSpace="${namespace}"
-tag="${tag}"
+#tag="${tag}"
 entity="${repository}"
 apiDomain="https://platform.slim.dev"
 
