@@ -16,7 +16,7 @@
 <p style="margin-left:25px;"> 
 Your image was successfully scanned and profiled using the Slim platform.<br />Visit <a class="font-class" href="https://portal.slim.dev/"  target="_blank">portal.slim.dev</a> to learn more.</p>
 <div  style="margin-left:35px;">
-👉 <a class="font-class" href="https://portal.slim.dev/collections/__COLLECTION__" target="_blank"><b>Collection</b></a><br />
+👉 <a class="font-class" href="__COLLECTION__" target="_blank"><b>Collection</b></a><br />
 👉 <a class="font-class" href="__PROFILE__#explorer" target="_blank"><b>Profile</b></a><br />
 👉 <a class="font-class" href="__PROFILE__#vulnerabilities" target="_blank"><b>Vulnerability Scan</b></a></div>
 </div>
