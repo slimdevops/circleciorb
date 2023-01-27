@@ -37,7 +37,6 @@ if echo "$repository" | grep -q ":"; then
   tag=${arr[1]}
   repository=${arr[0]}
 else
-  repository=${arr[0]}
   tag="latest"
 fi
 
