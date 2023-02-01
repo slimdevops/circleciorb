@@ -50,8 +50,8 @@ jsonDataUpdated=${jsonDataUpdated//__REPO__/"${entity}"}
 jsonDataUpdated=${jsonDataUpdated//__COMMAND__/${command}}
 jsonDataUpdated=${jsonDataUpdated//__TAG__/${tag}}
 #Starting Xray Scan
-xrayRequest=$(curl -u ":${SAAS_KEY}" -X 'POST' \
-  "${apiDomain}/orgs/${ORG_ID}/engine/executions" \
+xrayRequest=$(curl -u ":${SLIM_API_TOKEN}" -X 'POST' \
+  "${apiDomain}/orgs/${SLIM_ORG_ID}/engine/executions" \
   -H 'accept: application/json' \
   -H 'Content-Type: application/json' \
   -d "${jsonDataUpdated}")
@@ -65,7 +65,7 @@ echo Starting X-Ray Scan status check : "${PARAM_IMAGE}"
 
 executionStatus="unknown"
 while [[ ${executionStatus} != "completed" ]]; do
-	executionStatus=$(curl -s -u :"${SAAS_KEY}" "${apiDomain}"/orgs/"${ORG_ID}"/engine/executions/"${executionId}" | jq -r '.state')
+	executionStatus=$(curl -s -u :"${SLIM_API_TOKEN}" "${apiDomain}"/orgs/"${SLIM_ORG_ID}"/engine/executions/"${executionId}" | jq -r '.state')
     printf 'current NX state: %s '"$executionStatus \n"
     [[ "${executionStatus}" == "failed" || "${executionStatus}" == "null" ]] && { echo "XRAY failed - exiting..."; exit 1; }
     sleep 3
@@ -75,8 +75,8 @@ printf 'XRAY Completed state= %s '"$executionStatus \n"
 #Fetching the X-ray Report
 echo Fetching XRAY report : "${PARAM_IMAGE}"
 
-xrayReport=$(curl -L -u ":${SAAS_KEY}" -X 'GET' \
-  "${apiDomain}/orgs/${ORG_ID}/engine/executions/${executionId}/result/report" \
+xrayReport=$(curl -L -u ":${SLIM_API_TOKEN}" -X 'GET' \
+  "${apiDomain}/orgs/${SLIM_ORG_ID}/engine/executions/${executionId}/result/report" \
   -H 'accept: application/json' \
   -H 'Content-Type: application/json')
 
@@ -85,7 +85,7 @@ echo "${xrayReport}" >> /tmp/artifact-xray;#Uploading report to Artifact
 
 
 #Adding the container to Favourites
-curl -u ":${SAAS_KEY}" -X POST "${apiDomain}/orgs/${ORG_ID}/collections/${FAV_COLLECTION_ID}/images//pins" -H  "accept: application/json" -H  "Content-Type: application/json" -d "{\"scope\":\"tag\",\"connector\":\"${connectorId}\",\"entity\":\"${entity}\",\"namespace\":\"${nameSpace}\",\"version\":\"${tag}\",\"digest\":\"\",\"os\":\"linux\",\"arch\":\"amd64\"}"
+curl -u ":${SLIM_API_TOKEN}" -X POST "${apiDomain}/orgs/${SLIM_ORG_ID}/collections/${SLIM_COLLECTIONS_ID}/images//pins" -H  "accept: application/json" -H  "Content-Type: application/json" -d "{\"scope\":\"tag\",\"connector\":\"${connectorId}\",\"entity\":\"${entity}\",\"namespace\":\"${nameSpace}\",\"version\":\"${tag}\",\"digest\":\"\",\"os\":\"linux\",\"arch\":\"amd64\"}"
 
 
 

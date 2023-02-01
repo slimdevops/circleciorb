@@ -52,8 +52,8 @@ jsonDataUpdated=${jsonDataUpdated//__TAG__/${tag}}
 
 
 #Starting Vulnarability Scan
-vscanRequest=$(curl -u ":${SAAS_KEY}" -X 'POST' \
-  "${apiDomain}/orgs/${ORG_ID}/engine/executions" \
+vscanRequest=$(curl -u ":${SLIM_API_TOKEN}" -X 'POST' \
+  "${apiDomain}/orgs/${SLIM_ORG_ID}/engine/executions" \
   -H 'accept: application/json' \
   -H 'Content-Type: application/json' \
   -d "${jsonDataUpdated}")
@@ -72,7 +72,7 @@ echo Starting Vulnerability Scan status check : "${PARAM_IMAGE}"
 
 executionStatus="unknown"
 while [[ ${executionStatus} != "completed" ]]; do
-	executionStatus=$(curl -s -u :"${SAAS_KEY}" "${apiDomain}"/orgs/"${ORG_ID}"/engine/executions/"${executionId}" | jq -r '.state')
+	executionStatus=$(curl -s -u :"${SLIM_API_TOKEN}" "${apiDomain}"/orgs/"${SLIM_ORG_ID}"/engine/executions/"${executionId}" | jq -r '.state')
     printf 'current NX state: %s '"$executionStatus \n"
     [[ "${executionStatus}" == "failed" || "${executionStatus}" == "null" ]] && { echo "Vulnerability scan failed - exiting..."; exit 1; }
     sleep 3
@@ -82,8 +82,8 @@ printf 'Vulnerability scan Completed state= %s '"$executionStatus \n"
 #Fetching the report of Vulnarability Scan
 echo Fetching Vulnerability scan report : "${PARAM_IMAGE}"
 
-vscanReport=$(curl -L -u ":${SAAS_KEY}" -X 'GET' \
-  "${apiDomain}/orgs/${ORG_ID}/engine/executions/${executionId}/result/report" \
+vscanReport=$(curl -L -u ":${SLIM_API_TOKEN}" -X 'GET' \
+  "${apiDomain}/orgs/${SLIM_ORG_ID}/engine/executions/${executionId}/result/report" \
   -H 'accept: application/json' \
   -H 'Content-Type: application/json')
 
@@ -100,8 +100,8 @@ fi
 echo "${shaId}"
 echo "${vscanReport}" >> /tmp/artifact-vscan;#Report will be added to Artifact
 readmeData="${README}"
-echo "${FAV_COLLECTION_ID}"
-favcollectionUrl="https://portal.slim.dev/collections/${FAV_COLLECTION_ID}"
+echo "${SLIM_COLLECTIONS_ID}"
+favcollectionUrl="https://portal.slim.dev/collections/${SLIM_COLLECTIONS_ID}"
 readmeDataUpdated=${readmeData//__FAVCOLLECTION__/${favcollectionUrl}}
 readmeDataUpdated=${readmeDataUpdated//__PROFILE__/${urlProfile}}
 echo "${readmeDataUpdated}" >> /tmp/artifact-readme;
