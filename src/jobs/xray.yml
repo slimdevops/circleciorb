@@ -4,7 +4,7 @@ description: >
 # What will this job do?
 
 docker:
-  - image: cimg/base:<< parameters.cimgTag >>
+  - image: cimg/base:<< pipeline.parameters.cimg-tag >>
 
 parameters:
   imageName:
@@ -13,10 +13,6 @@ parameters:
   imageConnector:
     type: string
     description: "Connector.eg: dockerhub.public"
-  cimgTag:
-    type: string
-    default: "current"
-    description: "Which tag to be used for cimg/base"
 steps:
   - xray:
       imageName: << parameters.imageName >>
