@@ -33,4 +33,4 @@ steps:
       destination: vscan-json
   - store_artifacts:
       path: /tmp/artifact-readme
-      destination: readme.html    
+      destination: readme.html
