@@ -24,12 +24,7 @@ workflows:
   test-deploy:
     jobs:
       # Make sure to include "filters: *filters" in every test job you want to run as part of your deployment.
-      - slim-ai-test-orb/xray:
-          filters: *filters
-          imageName: << pipeline.parameters.image-name >>
-          imageConnector: << pipeline.parameters.image-connector >>
-          cimgTag: << pipeline.parameters.cimg-tag >>
-      - slim-ai-test-orb/vscan:
+      - slim-ai-test-orb/scan:
           filters: *filters
           imageName: << pipeline.parameters.image-name >>
           imageConnector: << pipeline.parameters.image-connector >>
@@ -42,8 +37,7 @@ workflows:
           pub-type: production
           requires:
             - orb-tools/pack
-            - slim-ai-test-orb/xray
-            - slim-ai-test-orb/vscan
+            - slim-ai-test-orb/scan
           context: orb-publishing
           filters:
             branches:

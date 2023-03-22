@@ -21,20 +21,11 @@ usage:
       description: Which tag to be used for cimg/base.
       type: string
       default: current #Which tag to be used for cimg eg:  cimg/base:current
-  jobs:
-    build:
-      docker:
-        - image: cimg/base:<< pipeline.parameters.cimg-tag >>
-      steps:
-        - checkout
-        - <orb-name>/xray:
-            imageName: << pipeline.parameters.image-name >>
-            imageConnector: << pipeline.parameters.image-connector >>
-            cimgTag: << pipeline.parameters.cimg-tag >>
-        - store_artifacts:
-            path: /tmp/artifact-xray
-            destination: "Filename for artifact"
+ 
   workflows:
     use-my-orb:
       jobs:
-        - build
+        - <orb-name>/scan:
+            imageName: << pipeline.parameters.image-name >>
+            imageConnector: << pipeline.parameters.image-connector >>
+            cimgTag: << pipeline.parameters.cimg-tag >>
