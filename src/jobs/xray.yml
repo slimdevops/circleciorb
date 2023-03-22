@@ -22,7 +22,6 @@ steps:
   - xray:
       imageName: << parameters.imageName >>
       imageConnector: << parameters.imageConnector >>
-      cimgTag: << parameters.cimgTag >>
   - store_artifacts:
       path: /tmp/artifact-xray
       destination: xray-json    

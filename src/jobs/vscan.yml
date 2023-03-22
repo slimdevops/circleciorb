@@ -17,6 +17,14 @@ parameters:
     default: "current"
     description: "Which tag to be used for cimg/base"
 steps:
+  - checkout
+      # Run your orb's commands to validate them.
   - vscan:
       imageName: << parameters.imageName >>
       imageConnector: << parameters.imageConnector >>
+  - store_artifacts:
+      path: /tmp/artifact-vscan
+      destination: vscan-json
+  - store_artifacts:
+      path: /tmp/artifact-readme
+      destination: readme.html
