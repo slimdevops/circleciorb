@@ -19,7 +19,7 @@ parameters:
     description: "Which tag to be used for cimg/base"
 steps:
   - checkout
-  - slim-ai-test-orb/xray:
+  - xray:
       imageName: << parameters.imageName >>
       imageConnector: << parameters.imageConnector >>
       cimgTag: << parameters.cimgTag >>
