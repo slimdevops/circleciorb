@@ -20,9 +20,9 @@ parameters:
 steps:
   - checkout
   - slim-ai-test-orb/xray:
-      imageName: << pipeline.parameters.image-name >>
-      imageConnector: << pipeline.parameters.image-connector >>
-      cimgTag: << pipeline.parameters.cimg-tag >>
+      imageName: << parameters.imageName >>
+      imageConnector: << parameters.imageConnector >>
+      cimgTag: << parameters.cimgTag >>
   - store_artifacts:
           path: /tmp/artifact-xray
           destination: xray-json    

@@ -44,7 +44,10 @@ jobs:
 workflows:
   test-deploy:
     jobs:
-      - slim-ai-test-orb/xray
+      - slim-ai-test-orb/xray:
+        imageName: << pipeline.parameters.image-name >>
+        imageConnector: << pipeline.parameters.image-connector >>
+        cimgTag: << pipeline.parameters.cimg-tag >>
       # Make sure to include "filters: *filters" in every test job you want to run as part of your deployment.
       - command-tests:
           filters: *filters
