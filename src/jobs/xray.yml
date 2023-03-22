@@ -24,4 +24,4 @@ steps:
       imageConnector: << parameters.imageConnector >>
   - store_artifacts:
       path: /tmp/artifact-xray
-      destination: xray-json    
+      destination: xray-json
