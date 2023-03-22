@@ -18,6 +18,11 @@ parameters:
     default: "current"
     description: "Which tag to be used for cimg/base"
 steps:
-  - xray:
-      imageName: << parameters.imageName >>
-      imageConnector: << parameters.imageConnector >>
+  - checkout
+  - slim-ai-test-orb/xray:
+      imageName: << pipeline.parameters.image-name >>
+      imageConnector: << pipeline.parameters.image-connector >>
+      cimgTag: << pipeline.parameters.cimg-tag >>
+  - store_artifacts:
+          path: /tmp/artifact-xray
+          destination: xray-json    
