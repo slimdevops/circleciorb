@@ -18,6 +18,11 @@ parameters:
     default: "current"
     description: "Which tag to be used for cimg/base"
 steps:
+  - checkout
   - xray:
       imageName: << parameters.imageName >>
       imageConnector: << parameters.imageConnector >>
+  - store_artifacts:
+      path: /tmp/artifact-xray
+      destination: xray-json
+
