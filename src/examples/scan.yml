@@ -10,10 +10,10 @@ description: >
 usage:
   version: 2.1
   orbs:
-    slim-scanner: slimdevops/slim-scanner@0.0.1
+    slim-ai-test-orb: slimdevops/slim-ai-test-orb@0.0.1
   workflows:
     use-my-orb:
       jobs:
-        - slim-scanner/scan:
+        - slim-ai-test-orb/scan:
             imageName: << pipeline.parameters.image-name >>
             cimgTag: << pipeline.parameters.cimg-tag >>
