@@ -3,6 +3,7 @@ description: >
 # Provide a use-case based example for using this orb.
 # Everything in the `usage` section will be displayed in the orb registry.
 # Comments are not retained.
+  The environment variables CONNECTOR_ID, SLIM_ORG_ID and SLIM_API_TOKEN must be set for this orb to work.
 usage:
   version: 2.1
   orbs:
