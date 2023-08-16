@@ -1,6 +1,5 @@
 description: >
-  This job will generate xray and vulnarability report of a given container using SAAS Api.The generated report will be uploaded to Circle CI Artifact.
-  After this process the container will be added to the Favourite collection in Slim Portal.
+  Generate a Container Profile and Multi-Engine Vulnerability Report for a given container using the Slim Developer Platform. The generated reports will be uploaded to CircleCI's Artifacts tab as a JSON document.
 # What will this job do?
 
 docker:
@@ -10,9 +9,6 @@ parameters:
   imageName:
     type: string
     description: "Container to scan.eg: library/node:latest"
-  imageConnector:
-    type: string
-    description: "Connector.eg: dockerhub.public"
   cimgTag:
     type: string
     default: "current"
@@ -21,16 +17,14 @@ steps:
   - checkout
   - xray:
       imageName: << parameters.imageName >>
-      imageConnector: << parameters.imageConnector >>
   - store_artifacts:
       path: /tmp/artifact-xray
-      destination: xray-json
+      destination: xray.json
   - vscan:
       imageName: << parameters.imageName >>
-      imageConnector: << parameters.imageConnector >>
   - store_artifacts:
       path: /tmp/artifact-vscan
-      destination: vscan-json
+      destination: vuln.json
   - store_artifacts:
       path: /tmp/artifact-readme
       destination: readme.html

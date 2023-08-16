@@ -1,6 +1,18 @@
 #!/bin/bash
 
-
+IMAGE_CONNECTOR="${CONNECTOR_ID}"
+if [ -z "$IMAGE_CONNECTOR" ]; then
+    echo "CONNECTOR_ID missing. Please add CONNECTOR_ID to the environment variables section."
+    exit 1
+fi
+if [ -z "${SLIM_API_TOKEN}" ]; then
+    echo "SLIM_API_TOKEN missing. Please add SLIM_API_TOKEN to the environment variables section."
+    exit 1
+fi
+if [ -z "${SLIM_ORG_ID}" ]; then
+    echo "SLIM_ORG_ID missing. Please add SLIM_ORG_ID to the environment variables section."
+    exit 1
+fi
 string="${IMAGE_CONNECTOR}/${PARAM_IMAGE}"
 
 match=$(echo "${string}" | grep -oP '^(?:([^/]+)/)?(?:([^/]+)/)?([^@:/]+)(?:[@:](.+))?$')
@@ -35,10 +47,6 @@ nameSpace="${namespace}"
 entity="${repository}"
 apiDomain="https://platform.slim.dev"
 
-IFS='.'
-read -ra array <<< "${connectorId}"
-connectorPlatform=${array[0]}
-echo "${connectorPlatform}"
 
 echo Starting Vulnerability Scan : "${PARAM_IMAGE}"
 
@@ -52,13 +60,20 @@ jsonDataUpdated=${jsonDataUpdated//__TAG__/${tag}}
 
 
 #Starting Vulnarability Scan
-vscanRequest=$(curl -u ":${SLIM_API_TOKEN}" -X 'POST' \
+vscanRequestResponse=$(curl -s -o - -w "\n%{http_code}" -u ":${SLIM_API_TOKEN}" -X 'POST' \
   "${apiDomain}/orgs/${SLIM_ORG_ID}/engine/executions" \
   -H 'accept: application/json' \
   -H 'Content-Type: application/json' \
   -d "${jsonDataUpdated}")
 
+response_code=$(tail -n1 <<< "$vscanRequestResponse")  # Extract the last line (HTTP response code)
 
+if [ "$response_code" != "200" ]; then
+    echo "Error: Engine execution failed for Vscan. HTTP response code: $response_code"
+    exit 1
+fi
+
+vscanRequest=$(head -n -1 <<< "$vscanRequestResponse") 
 
 
 
@@ -82,10 +97,21 @@ printf 'Vulnerability scan Completed state= %s '"$executionStatus \n"
 #Fetching the report of Vulnarability Scan
 echo Fetching Vulnerability scan report : "${PARAM_IMAGE}"
 
-vscanReport=$(curl -L -u ":${SLIM_API_TOKEN}" -X 'GET' \
+response=$(curl -s -o - -w "\n%{http_code}" -L -u ":${SLIM_API_TOKEN}" -X 'GET' \
   "${apiDomain}/orgs/${SLIM_ORG_ID}/engine/executions/${executionId}/result/report" \
   -H 'accept: application/json' \
   -H 'Content-Type: application/json')
+
+
+response_code=$(tail -n1 <<< "$response")  # Extract the last line (HTTP response code)
+
+if [ "$response_code" != "200" ]; then
+    echo "Error: Failed to fetch vscanReport. HTTP response code: $response_code"
+    exit 1
+fi
+
+vscanReport=$(head -n -1 <<< "$response") 
+
 
 shaId=$(jq -r '.image.digest' <<< "${vscanReport}")
 connectorData=$(jq -r '.image.connector' <<< "${vscanReport}")
@@ -97,13 +123,11 @@ if [ "${secondPart}" = "public" ];then
 else
   urlProfile="https://portal.slim.dev/home/xray/${connectorData}%3A%2F%2F${connectorId}%2F${nameSpace}%2F${entity}%3A${tag}%40sha256%3A${shaId}"
 fi
-echo "${shaId}"
+
 echo "${vscanReport}" >> /tmp/artifact-vscan;#Report will be added to Artifact
 readmeData="${README}"
-echo "${SLIM_COLLECTIONS_ID}"
-favcollectionUrl="https://portal.slim.dev/collections/${SLIM_COLLECTIONS_ID}"
-readmeDataUpdated=${readmeData//__FAVCOLLECTION__/${favcollectionUrl}}
-readmeDataUpdated=${readmeDataUpdated//__PROFILE__/${urlProfile}}
+
+readmeDataUpdated=${readmeData//__PROFILE__/${urlProfile}}
 echo "${readmeDataUpdated}" >> /tmp/artifact-readme;
 
 

@@ -1,5 +1,18 @@
 #!/bin/bash
 
+IMAGE_CONNECTOR="${CONNECTOR_ID}"
+if [ -z "$IMAGE_CONNECTOR" ]; then
+    echo "CONNECTOR_ID missing. Please add CONNECTOR_ID to the environment variables section."
+    exit 1
+fi
+if [ -z "${SLIM_API_TOKEN}" ]; then
+    echo "SLIM_API_TOKEN missing. Please add SLIM_API_TOKEN to the environment variables section."
+    exit 1
+fi
+if [ -z "${SLIM_ORG_ID}" ]; then
+    echo "SLIM_ORG_ID missing. Please add SLIM_ORG_ID to the environment variables section."
+    exit 1
+fi
 string="${IMAGE_CONNECTOR}/${PARAM_IMAGE}"
 
 match=$(echo "${string}" | grep -oP '^(?:([^/]+)/)?(?:([^/]+)/)?([^@:/]+)(?:[@:](.+))?$')
@@ -50,11 +63,22 @@ jsonDataUpdated=${jsonDataUpdated//__REPO__/"${entity}"}
 jsonDataUpdated=${jsonDataUpdated//__COMMAND__/${command}}
 jsonDataUpdated=${jsonDataUpdated//__TAG__/${tag}}
 #Starting Xray Scan
-xrayRequest=$(curl -u ":${SLIM_API_TOKEN}" -X 'POST' \
+xrayRequestResponse=$(curl -s -o - -w "\n%{http_code}" -u ":${SLIM_API_TOKEN}" -X 'POST' \
   "${apiDomain}/orgs/${SLIM_ORG_ID}/engine/executions" \
   -H 'accept: application/json' \
   -H 'Content-Type: application/json' \
   -d "${jsonDataUpdated}")
+
+response_code=$(tail -n1 <<< "$xrayRequestResponse")  # Extract the last line (HTTP response code)
+
+if [ "$response_code" != "200" ]; then
+    echo "Error: Engine execution failed for Xray. HTTP response code: $response_code"
+    exit 1
+fi
+
+xrayRequest=$(head -n -1 <<< "$xrayRequestResponse") 
+
+
 
 executionId=$(jq -r '.id' <<< "${xrayRequest}")
 
@@ -75,17 +99,24 @@ printf 'XRAY Completed state= %s '"$executionStatus \n"
 #Fetching the X-ray Report
 echo Fetching XRAY report : "${PARAM_IMAGE}"
 
-xrayReport=$(curl -L -u ":${SLIM_API_TOKEN}" -X 'GET' \
+response=$(curl -s -o - -w "\n%{http_code}" -L -u ":${SLIM_API_TOKEN}" -X 'GET' \
   "${apiDomain}/orgs/${SLIM_ORG_ID}/engine/executions/${executionId}/result/report" \
   -H 'accept: application/json' \
   -H 'Content-Type: application/json')
 
+response_code=$(tail -n1 <<< "$response")  # Extract the last line (HTTP response code)
+
+if [ "$response_code" != "200" ]; then
+    echo "Error: Failed to fetch xrayReport. HTTP response code: $response_code"
+    exit 1
+fi
+
+xrayReport=$(head -n -1 <<< "$response")  # Extract the content without the last line (response code)
+
+
+
+
 echo "${xrayReport}" >> /tmp/artifact-xray;#Uploading report to Artifact
-
-
-
-#Adding the container to Favourites
-curl -u ":${SLIM_API_TOKEN}" -X POST "${apiDomain}/orgs/${SLIM_ORG_ID}/collections/${SLIM_COLLECTIONS_ID}/images//pins" -H  "accept: application/json" -H  "Content-Type: application/json" -d "{\"scope\":\"tag\",\"connector\":\"${connectorId}\",\"entity\":\"${entity}\",\"namespace\":\"${nameSpace}\",\"version\":\"${tag}\",\"digest\":\"\",\"os\":\"linux\",\"arch\":\"amd64\"}"
 
 
 
