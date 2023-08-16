@@ -1,20 +1,14 @@
 description: >
-  This command scans a container for vulnerability and generates a report.
-# #What will this command do?
-
-# Descriptions should be short, simple, and clear.
+  Generate a Multi-Engine Vulnerability Report for a given container build using the Slim Developer Platform.
+  The generated report will be uploaded to CircleCI's Artifacts tab as a JSON document.
 parameters:
   imageName:
     type: string
-    description: "Container to scan.eg: library/node:latest"
-  imageConnector:
-    type: string
-    description: "Connector.eg: dockerhub.public"
+    description: "Container image to scan, e.g. library/node:latest"
 steps:
   - run:
       environment:
         PARAM_IMAGE: <<parameters.imageName>>
-        IMAGE_CONNECTOR: <<parameters.imageConnector>>
         VSCAN_REQUEST: <<include(scripts/xray_request.json)>>
         README: <<include(scripts/readme.html)>>
       name: Engine Execution - Vulnarability Scan
